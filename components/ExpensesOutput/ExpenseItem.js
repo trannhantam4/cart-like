@@ -1,23 +1,35 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Dimensions } from "react-native";
 import React from "react";
 import { GlobalStyles } from "../../constant/styles";
+import { getDateFormat } from "../../uti/Date";
 
-export default function ExpenseItem({ des, price, date }) {
+import { useNavigation } from "@react-navigation/native";
+const { width, height } = Dimensions.get("screen");
+export default function ExpenseItem({ id, des, price, date }) {
+  const navigation = useNavigation();
+  function pressHandler() {
+    navigation.navigate("ManageExpense", { expenseId: id });
+  }
+
   return (
-    <Pressable>
+    <Pressable
+      onPress={pressHandler}
+      style={({ pressed }) => pressed && styles.pressed}
+    >
       <View style={styles.item}>
         <View>
           <Text style={[styles.textBase, styles.des]}>{des}</Text>
-          <Text style={styles.textBase}>{date.toString()}</Text>
+          <Text style={styles.textBase}>{getDateFormat(date)}</Text>
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}> {price}</Text>
+          <Text style={styles.price}> {price.toFixed(2)}</Text>
         </View>
       </View>
     </Pressable>
   );
 }
 const styles = StyleSheet.create({
+  pressed: { opacity: 0.8 },
   item: {
     padding: 12,
     marginVertical: 8,
@@ -42,6 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 4,
+    width: width * 0.2,
   },
   price: {
     color: GlobalStyles.colors.primary500,
