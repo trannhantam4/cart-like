@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React, { useContext } from "react";
 import { ExpensesContext } from "../store/expenses-context";
-
+import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 export default function AllExpenses() {
   const expensesCtx = useContext(ExpensesContext);
   return (

@@ -1,10 +1,13 @@
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constant/styles";
 import Button from "../components/UI/Button";
 const { width, height } = Dimensions.get("screen");
+import { ExpensesContext } from "../store/expenses-context";
 export default function ManageExpense({ route, navigation }) {
+  const expenseCtx = useContext(ExpensesContext);
+
   const id = route.params?.expenseId;
   const isEditing = !!id;
   useLayoutEffect(() => {
@@ -13,12 +16,22 @@ export default function ManageExpense({ route, navigation }) {
     });
   }, [navigation, isEditing]);
   function deleteHandler() {
+    expenseCtx.deleteExpense(id);
     navigation.goBack();
   }
   function cancelHandler() {
     navigation.goBack();
   }
   function confirmHandler() {
+    if (isEditing) {
+      expenseCtx.updateExpense(id, {
+        des: "new2",
+        price: 15.99,
+        date: new Date("2022-06-12"),
+      });
+    } else {
+      expenseCtx.addExpense({ des: "new", price: 15.5, date: new Date() });
+    }
     navigation.goBack();
   }
   return (
@@ -28,7 +41,7 @@ export default function ManageExpense({ route, navigation }) {
           Cancel
         </Button>
         <Button style={styles.button} onPress={confirmHandler}>
-          Update
+          {isEditing ? "Update" : "Add"}
         </Button>
       </View>
       {isEditing && (

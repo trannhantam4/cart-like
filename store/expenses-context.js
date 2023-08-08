@@ -27,9 +27,10 @@ function expensesReducer(state, action) {
         (expense) => expense.id === action.payload.id
       );
       const updateableExpense = state[updateableIndex];
-      const updateableItem = { ...updateableExpense, ...action.payload.data };
+      const updateItem = { ...updateableExpense, ...action.payload.data };
       const updateExpenses = [...state];
-      updateExpenses[updateableIndex] = updateableItem;
+      updateExpenses[updateableIndex] = updateItem;
+
       return updateExpenses;
     case "DELETE":
       return state.filter((expense) => expense.id !== action.payload);
@@ -41,17 +42,17 @@ function expensesReducer(state, action) {
 function ExpensesContextProvider({ children }) {
   const [expensesState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES);
 
-  function addExpense({ expenseData }) {
+  function addExpense(expenseData) {
     dispatch({ type: "ADD", payload: expenseData });
   }
-  function deleteExpense({ id }) {
+  function deleteExpense(id) {
     dispatch({ type: "DELETE", payload: id });
   }
-  function updateExpense({ id, expenseData }) {
+  function updateExpense(id, expenseData) {
     dispatch({ type: "UPDATE", payload: { id: id, data: expenseData } });
   }
   const value = {
-    expense: expensesState,
+    expenses: expensesState,
     addExpense: addExpense,
     deleteExpense: deleteExpense,
     updateExpense: updateExpense,
