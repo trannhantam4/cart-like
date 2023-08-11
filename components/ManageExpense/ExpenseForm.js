@@ -3,12 +3,18 @@ import React, { useState } from "react";
 import Input from "./Input";
 import { GlobalStyles } from "../../constant/styles";
 import Button from "../UI/Button";
+import { getDateFormat } from "../../uti/Date";
 const { width, height } = Dimensions.get("screen");
-export default function ExpenseForm({ onCancel, onSubmit, submitLabel }) {
+export default function ExpenseForm({
+  onCancel,
+  onSubmit,
+  submitLabel,
+  defaultValue,
+}) {
   const [input, setInput] = useState({
-    price: "",
-    date: "",
-    des: "",
+    price: defaultValue ? defaultValue.price.toString() : "",
+    date: defaultValue ? getDateFormat(defaultValue.date) : "",
+    des: defaultValue ? defaultValue.des.toString() : "",
   });
   function submitHandler() {
     const expenseData = {
