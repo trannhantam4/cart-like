@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Alert } from "react-native";
 import React, { useState } from "react";
 import Input from "./Input";
 import { GlobalStyles } from "../../constant/styles";
@@ -22,6 +22,14 @@ export default function ExpenseForm({
       date: new Date(input.date),
       des: input.des,
     };
+    const priceIsValid = !isNaN(expenseData.price) && expenseData.price > 0;
+    const dateIsValid = expenseData.date.toString() !== "Invalid Date";
+    const desIsValid = expenseData.des.trim().length > 0;
+
+    if (priceIsValid || dateIsValid || desIsValid) {
+      Alert.alert("Invalid Inpu!!", "Please check you input");
+      return;
+    }
     onSubmit(expenseData);
   }
   function inputChangeHandler(inputId, enteredValue) {
