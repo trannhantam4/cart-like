@@ -1,8 +1,13 @@
 import axios from "axios";
 
 const BACKEND_URL = "https://cart-like-a99e2-default-rtdb.firebaseio.com";
-export function storeExpense(expenseData) {
-  axios.post(BACKEND_URL + "/expenses.json", expenseData);
+export async function storeExpense(expenseData) {
+  const response = await axios.post(
+    BACKEND_URL + "/expenses.json",
+    expenseData
+  );
+  const id = response.data.name;
+  return id;
 }
 export async function fetchExpense() {
   const response = await axios.get(BACKEND_URL + "/expenses.json");
@@ -10,8 +15,8 @@ export async function fetchExpense() {
   for (const key in response.data) {
     const expenseObj = {
       id: key,
-      date: response.data[key].date,
-      des: new Date(response.data[key].des),
+      date: new Date(response.data[key].date),
+      des: response.data[key].des,
       price: response.data[key].price,
     };
     expenses.push(expenseObj);
