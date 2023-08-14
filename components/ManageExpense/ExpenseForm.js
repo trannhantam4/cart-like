@@ -26,8 +26,8 @@ export default function ExpenseForm({
     const dateIsValid = expenseData.date.toString() !== "Invalid Date";
     const desIsValid = expenseData.des.trim().length > 0;
 
-    if (priceIsValid || dateIsValid || desIsValid) {
-      Alert.alert("Invalid Inpu!!", "Please check you input");
+    if (!priceIsValid || !dateIsValid || !desIsValid) {
+      Alert.alert("Invalid Input!!", "Please check you input");
       return;
     }
     onSubmit(expenseData);
