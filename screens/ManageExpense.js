@@ -5,7 +5,7 @@ import { GlobalStyles } from "../constant/styles";
 
 import { ExpensesContext } from "../store/expenses-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
-import { storeExpense } from "../uti/http";
+import { deleteExpense, storeExpense, updateExpense } from "../uti/http";
 export default function ManageExpense({ route, navigation }) {
   const expenseCtx = useContext(ExpensesContext);
 
@@ -21,8 +21,9 @@ export default function ManageExpense({ route, navigation }) {
       title: isEditing ? "Edit Expense" : "Add Expense",
     });
   }, [navigation, isEditing]);
-  function deleteHandler() {
+  async function deleteHandler() {
     expenseCtx.deleteExpense(id);
+    await deleteExpense(id);
     navigation.goBack();
   }
   function cancelHandler() {
@@ -31,6 +32,7 @@ export default function ManageExpense({ route, navigation }) {
   async function confirmHandler(expenseData) {
     if (isEditing) {
       expenseCtx.updateExpense(id, expenseData);
+      await updateExpense(id, expenseData);
     } else {
       const id = await storeExpense(expenseData);
       expenseCtx.addExpense({ ...expenseData, id: id });
@@ -43,7 +45,7 @@ export default function ManageExpense({ route, navigation }) {
         onCancel={cancelHandler}
         onSubmit={confirmHandler}
         submitLabel={isEditing ? "Update" : "Add"}
-        defautlValue={selectedExpense}
+        defaultValue={selectedExpense}
       />
 
       {isEditing && (
