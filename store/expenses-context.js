@@ -39,7 +39,7 @@ function ExpensesContextProvider({ children }) {
     dispatch({ type: "ADD", payload: expenseData });
   }
   function setExpense(expenses) {
-    dispatch: ({ type: "SET", payload: expenses });
+    dispatch({ type: "SET", payload: expenses });
   }
   function deleteExpense(id) {
     dispatch({ type: "DELETE", payload: id });

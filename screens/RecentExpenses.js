@@ -9,6 +9,7 @@ export default function RecentExpenses() {
   useEffect(() => {
     async function getExpenses() {
       const expenses = await fetchExpense();
+      console.log(expenses);
       expensesCtx.setExpense(expenses);
     }
 
