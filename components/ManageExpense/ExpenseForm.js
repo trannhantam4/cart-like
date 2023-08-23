@@ -11,8 +11,6 @@ export default function ExpenseForm({
   submitLabel,
   defaultValue,
 }) {
-  console.log(defaultValue);
-
   const [input, setInput] = useState({
     price: defaultValue ? defaultValue.price.toString() : "",
     date: defaultValue ? getDateFormat(defaultValue.date) : "",

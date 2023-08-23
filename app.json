@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "cart",
+    "name": "Money Manage",
     "slug": "cart",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,6 +15,7 @@
       "**/*"
     ],
     "ios": {
+      "buildNumber":"1.0.0",
       "supportsTablet": true
     },
     "android": {
