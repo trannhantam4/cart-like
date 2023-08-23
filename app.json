@@ -15,8 +15,9 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber":"1.0.0",
-      "supportsTablet": true
+      "buildNumber": "1.0.0",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.trannhantam4.cart"
     },
     "android": {
       "adaptiveIcon": {
