@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 import { getDateMinusDays } from "../uti/Date";
 import { ExpensesContext } from "../store/expenses-context";
@@ -6,6 +6,7 @@ import { fetchExpense } from "../uti/http";
 import ErrorOverlay from "../components/UI/ErrorOverlay";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
 export default function RecentExpenses() {
+  const [selectedDate, setSelectedDate] = useState(7);
   const expensesCtx = useContext(ExpensesContext);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState("");
@@ -34,12 +35,17 @@ export default function RecentExpenses() {
     return <LoadingOverlay />;
   }
   const today = new Date();
-  const date7DaysAgo = getDateMinusDays(today, 7);
+  const date7DaysAgo = getDateMinusDays(today, selectedDate);
   const recentExpenses = expensesCtx.expenses.filter((expense) => {
     return expense.date >= date7DaysAgo && expense.date <= today;
   });
 
   return (
-    <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 days" />
+    <ExpensesOutput
+      expenses={recentExpenses}
+      expensesPeriod="Last 7 days"
+      selectDate={setSelectedDate}
+      fromScreen={"recent"}
+    />
   );
 }

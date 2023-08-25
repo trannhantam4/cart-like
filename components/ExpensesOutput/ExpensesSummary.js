@@ -1,20 +1,53 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { GlobalStyles } from "../../constant/styles";
-
-export default function ExpensesSummary({ expenses, period }) {
+import { Picker } from "@react-native-picker/picker";
+export default function ExpensesSummary({
+  expenses,
+  period,
+  selectDate,
+  fromScreen,
+}) {
+  const [selectedDate, setSelectedDate] = React.useState("");
   const expensesSum = expenses.reduce((sum, expense) => {
     return sum + expense.price;
   }, 0);
+  const pickerRef = React.useRef();
+
+  function open() {
+    pickerRef.current.focus();
+  }
+
+  function close() {
+    pickerRef.current.blur();
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.period}>{period} </Text>
-      <Text style={styles.sum}>${expensesSum.toFixed(2)}</Text>
+      {fromScreen === "recent" ? (
+        <Picker
+          style={{ width: "50%" }}
+          selectedValue={selectedDate}
+          onValueChange={(itemValue, itemIndex) => {
+            setSelectedDate(itemValue);
+            selectDate(itemValue);
+          }}
+        >
+          <Picker.Item label="7 days" value="7" />
+          <Picker.Item label="14 days" value="14" />
+          <Picker.Item label="30 days" value="30" />
+        </Picker>
+      ) : (
+        <Text style={styles.period}>Total</Text>
+      )}
+
+      <Text style={styles.sum}>{expensesSum.toFixed(0)}.000 VND</Text>
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
+    height: "10%",
     padding: 8,
     backgroundColor: GlobalStyles.colors.primary50,
     borderRadius: 6,
@@ -23,8 +56,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   period: {
-    fontSize: 12,
+    fontSize: 16,
     color: GlobalStyles.colors.primary400,
+    padding: 8,
   },
   sum: {
     fontSize: 16,

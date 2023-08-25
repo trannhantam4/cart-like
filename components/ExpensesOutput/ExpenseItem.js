@@ -10,7 +10,6 @@ export default function ExpenseItem({ id, des, price, date }) {
   function pressHandler() {
     navigation.navigate("ManageExpense", { expenseId: id });
   }
-
   return (
     <Pressable
       onPress={pressHandler}
@@ -22,7 +21,7 @@ export default function ExpenseItem({ id, des, price, date }) {
           <Text style={styles.textBase}>{getDateFormat(date)}</Text>
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}> {price.toFixed(2)}</Text>
+          <Text style={styles.price}> {price.toFixed(0)}.000</Text>
         </View>
       </View>
     </Pressable>
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 4,
-    width: width * 0.2,
+    width: width * 0.35,
   },
   price: {
     color: GlobalStyles.colors.primary500,

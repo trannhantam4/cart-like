@@ -44,7 +44,7 @@ export default function ExpenseForm({
       <View style={styles.inputRow}>
         <Input
           style={styles.row}
-          label="Price"
+          label="Price (x1000)"
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangeHandler.bind(this, "price"),

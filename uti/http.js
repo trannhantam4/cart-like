@@ -21,6 +21,7 @@ export async function fetchExpense() {
     };
     expenses.push(expenseObj);
   }
+  expenses.sort((a, b) => a.date - b.date);
   return expenses;
 }
 export function updateExpense(id, expenseData) {

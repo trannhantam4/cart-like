@@ -4,10 +4,20 @@ import ExpensesSummary from "./ExpensesSummary";
 import ExpensesList from "./ExpensesList";
 import { GlobalStyles } from "../../constant/styles";
 
-export default function ExpensesOutput({ expenses, expensesPeriod }) {
+export default function ExpensesOutput({
+  expenses,
+  expensesPeriod,
+  selectDate,
+  fromScreen,
+}) {
   return (
     <View style={styles.container}>
-      <ExpensesSummary expenses={expenses} period={expensesPeriod} />
+      <ExpensesSummary
+        expenses={expenses}
+        period={expensesPeriod}
+        selectDate={selectDate}
+        fromScreen={fromScreen}
+      />
       <ExpensesList expenses={expenses} />
     </View>
   );
