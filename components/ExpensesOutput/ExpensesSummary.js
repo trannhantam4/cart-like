@@ -36,6 +36,7 @@ export default function ExpensesSummary({
           <Picker.Item label="7 days" value="7" />
           <Picker.Item label="14 days" value="14" />
           <Picker.Item label="30 days" value="30" />
+          <Picker.Item label="year" value="365" />
         </Picker>
       ) : (
         <Text style={styles.period}>Total</Text>
