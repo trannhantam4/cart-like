@@ -4,6 +4,7 @@ import Input from "./Input";
 import { GlobalStyles } from "../../constant/styles";
 import Button from "../UI/Button";
 import { getDateFormat } from "../../uti/Date";
+import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("screen");
 export default function ExpenseForm({
   onCancel,
