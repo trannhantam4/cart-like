@@ -11,7 +11,7 @@ export const GlobalStyles = {
     error50: "#fcc4e4",
     error500: "#9b095c",
     gray500: "#39324a",
-    gray700: "#221c30",
+    gray700: "#221c37",
     green200: "#34D399",
     green300: "#10B981",
     green400: "#059669",
