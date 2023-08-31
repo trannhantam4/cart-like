@@ -14,21 +14,23 @@ export default function ExpenseForm({
 }) {
   const [input, setInput] = useState({
     price: defaultValue ? defaultValue.price.toString() : "",
-    date: defaultValue ? getDateFormat(defaultValue.date) : "",
+
     des: defaultValue ? defaultValue.des.toString() : "",
   });
-
+  const [selectedDate, setSelectedDate] = useState(
+    defaultValue ? new Date(defaultValue.date) : new Date()
+  );
+  const [showDatePicker, setShowDatePicker] = useState(false);
   function submitHandler() {
     const expenseData = {
       price: +input.price,
-      date: new Date(input.date),
+      date: selectedDate,
       des: input.des,
     };
     const priceIsValid = !isNaN(expenseData.price) && expenseData.price > 0;
-    const dateIsValid = expenseData.date.toString() !== "Invalid Date";
     const desIsValid = expenseData.des.trim().length > 0;
 
-    if (!priceIsValid || !dateIsValid || !desIsValid) {
+    if (!priceIsValid || !desIsValid) {
       Alert.alert("Invalid Input!!", "Please check you input");
       return;
     }
@@ -39,6 +41,14 @@ export default function ExpenseForm({
       return { ...curInput, [inputId]: enteredValue };
     });
   }
+  const handleDateChange = (event, selected) => {
+    if (event.type === "set") {
+      setShowDatePicker(false);
+      setSelectedDate(selected);
+    } else {
+      setShowDatePicker(false);
+    }
+  };
   return (
     <View style={styles.form}>
       <Text style={styles.title}>Your Expense</Text>
@@ -52,7 +62,7 @@ export default function ExpenseForm({
             value: input.price,
           }}
         />
-        <Input
+        {/* <Input
           style={styles.row}
           label="Date"
           textInputConfig={{
@@ -61,8 +71,24 @@ export default function ExpenseForm({
             onChangeText: inputChangeHandler.bind(this, "date"),
             value: input.date,
           }}
-        />
+        /> */}
+        <View style={styles.screen}>
+          <Text style={styles.label}>Date: {getDateFormat(selectedDate)}</Text>
+          <Button style={styles.button} onPress={() => setShowDatePicker(true)}>
+            Select Date
+          </Button>
+        </View>
       </View>
+
+      {showDatePicker && (
+        <DateTimePicker
+          value={selectedDate}
+          style={{ height: height * 0.2 }}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+        />
+      )}
       <Input
         label="Description"
         textInputConfig={{
@@ -95,6 +121,10 @@ const styles = StyleSheet.create({
   row: {
     flex: 1,
   },
+  screen: {
+    marginHorizontal: 6,
+    marginVertical: 12,
+  },
   title: {
     fontSize: height * 0.04,
     fontWeight: "bold",
@@ -109,5 +139,10 @@ const styles = StyleSheet.create({
   },
   button: {
     width: width * 0.25,
+  },
+  label: {
+    fontSize: 12,
+    color: GlobalStyles.colors.primary100,
+    marginBottom: 12,
   },
 });
