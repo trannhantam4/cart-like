@@ -1,3 +1,4 @@
+//web 251233063416-uvhdt69igtg5tds6fem8rl67qptuq11h.apps.googleusercontent.com
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
