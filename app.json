@@ -18,8 +18,7 @@
     "ios": {
       "buildNumber": "1.0.0",
       "supportsTablet": true,
-      "bundleIdentifier": "com.trannhantam4.cart",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "bundleIdentifier": "com.trannhantam4.cart"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +27,7 @@
         "googleServicesFile": "./google-services.json"
       },
       "package": "com.trannhantam4.cart"
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,6 +36,7 @@
       "eas": {
         "projectId": "f610cfc6-4704-4fd1-9f6a-ac5070ddb7f6"
       }
-    }
+    },
+    "scheme": "moneymanage"
   }
 }

@@ -5,7 +5,7 @@ import { ExpensesContext } from "../store/expenses-context";
 import { fetchExpense } from "../uti/http";
 import ErrorOverlay from "../components/UI/ErrorOverlay";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
-import Swiper from "react-native-swiper";
+// import Swiper from "react-native-swiper";
 import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
 export default function RecentExpenses() {
   const imageUrls = [
@@ -19,17 +19,18 @@ export default function RecentExpenses() {
   const [error, setError] = useState("");
   const ViewPagerScreen = () => {
     return (
-      <Swiper style={styles.wrapper} showsButtons={true}>
-        {imageUrls.map((imageUrl, index) => (
-          <View key={index} style={styles.slide}>
-            <Image
-              source={{ uri: imageUrl }}
-              style={styles.image}
-              resizeMode="cover"
-            />
-          </View>
-        ))}
-      </Swiper>
+      <></>
+      // <Swiper style={styles.wrapper} showsButtons={true}>
+      //   {imageUrls.map((imageUrl, index) => (
+      //     <View key={index} style={styles.slide}>
+      //       <Image
+      //         source={{ uri: imageUrl }}
+      //         style={styles.image}
+      //         resizeMode="cover"
+      //       />
+      //     </View>
+      //   ))}
+      // </Swiper>
     );
   };
 
