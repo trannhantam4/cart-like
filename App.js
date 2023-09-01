@@ -11,7 +11,22 @@ import { Ionicons } from "@expo/vector-icons";
 import IconButton from "./components/UI/IconButton";
 import ExpensesContextProvider from "./store/expenses-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+const firebaseConfig = {
+  apiKey: "AIzaSyBE1XY0m9EggujbamGiS8ahLPBCG3nfEis",
+  authDomain: "cart-like-a99e2.firebaseapp.com",
+  databaseURL: "https://cart-like-a99e2-default-rtdb.firebaseio.com",
+  projectId: "cart-like-a99e2",
+  storageBucket: "cart-like-a99e2.appspot.com",
+  messagingSenderId: "773723594890",
+  appId: "1:773723594890:web:e530c71defdf6da3ffcd73",
+};
 
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 function ExpenseOverview() {
@@ -60,6 +75,52 @@ function ExpenseOverview() {
   );
 }
 export default function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const userFromStorage = await AsyncStorage.getItem("user");
+      if (userFromStorage) {
+        setUser(JSON.parse(userFromStorage));
+      }
+    };
+    checkUser();
+  }, []);
+
+  const signInWithGoogle = async () => {
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const { user } = await firebase.auth().signInWithPopup(provider);
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+    }
+  };
+  {
+    user ? (
+      <View>
+        <Text>Welcome, {user.displayName}</Text>
+        <Button title="Sign Out" onPress={signOut} />
+      </View>
+    ) : (
+      <View>
+        <Text>Sign in with Google</Text>
+        <Button title="Sign In" onPress={signInWithGoogle} />
+      </View>
+    );
+  }
+
+  const signOut = async () => {
+    try {
+      await firebase.auth().signOut();
+      await AsyncStorage.removeItem("user");
+      setUser(null);
+    } catch (error) {
+      console.error("Sign Out Error:", error);
+    }
+  };
+
   return (
     <>
       <StatusBar style="light" />
