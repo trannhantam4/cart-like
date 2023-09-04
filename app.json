@@ -21,10 +21,11 @@
       "bundleIdentifier": "com.trannhantam4.cart"
     },
     "android": {
+      "versionCode":1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "googleServicesFile": "./google-services.json"
+        "backgroundColor": "#ffffff"
+        
       },
       "package": "com.trannhantam4.cart"
       
