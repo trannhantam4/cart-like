@@ -19,7 +19,7 @@ export default function RecentExpenses() {
   const [error, setError] = useState("");
   const ViewPagerScreen = () => {
     return (
-      <>
+      <View style={styles.swiperContainer}>
         <Swiper style={styles.wrapper} showsButtons={true}>
           {imageUrls.map((imageUrl, index) => (
             <View key={index} style={styles.slide}>
@@ -31,7 +31,7 @@ export default function RecentExpenses() {
             </View>
           ))}
         </Swiper>
-      </>
+      </View>
     );
   };
 
@@ -79,7 +79,7 @@ export default function RecentExpenses() {
 }
 const windowWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
-  wrapper: { height: "20%" },
+  wrapper: { height: "100%" },
   slide: {
     flex: 1,
     justifyContent: "center",
@@ -89,5 +89,8 @@ const styles = StyleSheet.create({
   image: {
     width: windowWidth,
     height: "100%",
+  },
+  swiperContainer: {
+    height: "20%",
   },
 });
