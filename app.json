@@ -11,20 +11,28 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": ["@react-native-google-signin/google-signin"],
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.1",
       "supportsTablet": true,
-      "bundleIdentifier": "com.trannhantam4.cart"
+      "bundleIdentifier": "com.trannhantam4.cart",
+      "googleServicesFile": "./GoogleService-Info.plist"
+
     },
     "android": {
+      "versionCode":2,
+      "googleServicesFile": "./google-services.json",
+
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+        
       },
       "package": "com.trannhantam4.cart"
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,6 +41,7 @@
       "eas": {
         "projectId": "f610cfc6-4704-4fd1-9f6a-ac5070ddb7f6"
       }
-    }
+    },
+    "scheme": "moneymanage"
   }
 }

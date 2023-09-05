@@ -8,13 +8,17 @@
       "distribution": "internal"
     },
     "moneyManage": {
-      "android":{
+      "android":{ 
         "buildType": "apk"
       },
       "ios":{"simulator":true},
       "distribution": "internal"
     },
-    "production": {}
+    "production": {},
+    "preview":{
+      "android":{"buildType":"apk"},
+      "distribution":"internal"
+    }
   },
   "submit": {
     "production": {}
