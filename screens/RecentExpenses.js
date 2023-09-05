@@ -5,7 +5,7 @@ import { ExpensesContext } from "../store/expenses-context";
 import { fetchExpense } from "../uti/http";
 import ErrorOverlay from "../components/UI/ErrorOverlay";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
-import Swiper from "react-native-swiper";
+// import Swiper from "react-native-swiper";
 import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
 export default function RecentExpenses() {
   const imageUrls = [
@@ -17,23 +17,23 @@ export default function RecentExpenses() {
   const expensesCtx = useContext(ExpensesContext);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState("");
-  const ViewPagerScreen = () => {
-    return (
-      <View style={styles.swiperContainer}>
-        <Swiper style={styles.wrapper} showsButtons={true}>
-          {imageUrls.map((imageUrl, index) => (
-            <View key={index} style={styles.slide}>
-              <Image
-                source={{ uri: imageUrl }}
-                style={styles.image}
-                resizeMode="cover"
-              />
-            </View>
-          ))}
-        </Swiper>
-      </View>
-    );
-  };
+  // const ViewPagerScreen = () => {
+  //   return (
+  //     <View style={styles.swiperContainer}>
+  //       <Swiper style={styles.wrapper} showsButtons={true}>
+  //         {imageUrls.map((imageUrl, index) => (
+  //           <View key={index} style={styles.slide}>
+  //             <Image
+  //               source={{ uri: imageUrl }}
+  //               style={styles.image}
+  //               resizeMode="cover"
+  //             />
+  //           </View>
+  //         ))}
+  //       </Swiper>
+  //     </View>
+  //   );
+  // };
 
   useEffect(() => {
     async function getExpenses() {
@@ -67,7 +67,7 @@ export default function RecentExpenses() {
 
   return (
     <>
-      <ViewPagerScreen />
+      {/* <ViewPagerScreen /> */}
       <ExpensesOutput
         expenses={recentExpenses}
         expensesPeriod="Last 7 days"
