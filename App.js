@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import IconButton from "./components/UI/IconButton";
 import ExpensesContextProvider from "./store/expenses-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+//error
 const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 function ExpenseOverview() {
