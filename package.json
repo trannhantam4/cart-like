@@ -26,7 +26,7 @@
     "date-fns": "^2.30.0",
     "expo": "^49.0.9",
     "expo-auth-session": "~5.0.2",
-    "expo-constants": "~14.4.2",
+    "expo-constants": "~13.1.0",
     "expo-crypto": "~12.4.1",
     "expo-google-sign-in": "^11.0.0",
     "expo-random": "~13.2.0",
