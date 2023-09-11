@@ -18,8 +18,7 @@
     "ios": {
       "buildNumber": "1.0.1",
       "supportsTablet": true,
-      "bundleIdentifier": "com.trannhantam4.cart",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "bundleIdentifier": "com.trannhantam4.cart"
 
     },
     "android": {

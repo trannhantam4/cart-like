@@ -10,8 +10,28 @@ import { GlobalStyles } from "./constant/styles";
 import { Ionicons } from "@expo/vector-icons";
 import IconButton from "./components/UI/IconButton";
 import ExpensesContextProvider from "./store/expenses-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-//error
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from "@react-native-google-signin/google-signin";
+import auth from "@react-native-firebase/auth";
+import LogIn from "./screens/LogIn";
+import { useState, useEffect, useContext } from "react";
+import { firebase } from "@react-native-firebase/auth";
+const firebaseConfig = {
+  apiKey: "AIzaSyBE1XY0m9EggujbamGiS8ahLPBCG3nfEis",
+  authDomain: "cart-like-a99e2.firebaseapp.com",
+  databaseURL: "https://cart-like-a99e2-default-rtdb.firebaseio.com",
+  projectId: "cart-like-a99e2",
+  storageBucket: "cart-like-a99e2.appspot.com",
+  messagingSenderId: "773723594890",
+  appId: "1:773723594890:web:e530c71defdf6da3ffcd73",
+};
+
+// Check if Firebase has already been initialized to avoid re-initialization
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 function ExpenseOverview() {
@@ -60,6 +80,50 @@ function ExpenseOverview() {
   );
 }
 export default function App() {
+  GoogleSignin.configure({
+    webClientId:
+      "773723594890-hnajs69c2k3o6gffaetptkq9jjecriti.apps.googleusercontent.com",
+  });
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  async function onGoogleButtonPress() {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    const userSignIn = auth().signInWithCredential(googleCredential);
+    userSignIn
+      .then((user) => {
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
+
+  if (!user) {
+    return (
+      <LogIn>
+        <GoogleSigninButton onPress={onGoogleButtonPress} />
+      </LogIn>
+    );
+  }
   return (
     <>
       <StatusBar style="light" />

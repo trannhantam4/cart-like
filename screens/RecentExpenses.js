@@ -5,6 +5,7 @@ import { ExpensesContext } from "../store/expenses-context";
 import { fetchExpense } from "../uti/http";
 import ErrorOverlay from "../components/UI/ErrorOverlay";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
+import auth from "@react-native-firebase/auth";
 // import Swiper from "react-native-swiper";
 import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
 export default function RecentExpenses() {

@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "773723594890",
+    "firebase_url": "https://cart-like-a99e2-default-rtdb.firebaseio.com",
+    "project_id": "cart-like-a99e2",
+    "storage_bucket": "cart-like-a99e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773723594890:android:12fb67e7732ae48cffcd73",
+        "android_client_info": {
+          "package_name": "com.trannhantam4.cart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773723594890-1vaoblfonk4bsdfr4h69abad502k3irb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trannhantam4.cart",
+            "certificate_hash": "64b926d7bc99bae13283c84c8a6e83ceaf59dfe2"
+          }
+        },
+        {
+          "client_id": "773723594890-mpiv0d7k4104ttg7p1296aaglpcmv6vf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trannhantam4.cart",
+            "certificate_hash": "f66bb52377ea51ea6130a49cd7c85b7607100c6e"
+          }
+        },
+        {
+          "client_id": "773723594890-hnajs69c2k3o6gffaetptkq9jjecriti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBauf-IXeh1FPZFkZrAdS37qKEOQR0eEnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773723594890-a69v0b29tm6jeq9h7niti60vgt7ktq57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
