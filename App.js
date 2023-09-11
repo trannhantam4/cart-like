@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -28,13 +28,21 @@ const firebaseConfig = {
   appId: "1:773723594890:web:e530c71defdf6da3ffcd73",
 };
 
-// Check if Firebase has already been initialized to avoid re-initialization
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 function ExpenseOverview() {
+  const user = firebase.auth().currentUser;
+  async function onSignOutPress() {
+    try {
+      await auth().signOut();
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+    console.log(user);
+  }
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -52,6 +60,14 @@ function ExpenseOverview() {
             }}
           />
         ),
+        headerLeft: ({ tintColor }) => (
+          <IconButton
+            icon="power"
+            size={24}
+            color={tintColor}
+            onPress={onSignOutPress}
+          />
+        ),
       })}
     >
       <BottomTabs.Screen
@@ -61,7 +77,9 @@ function ExpenseOverview() {
           title: "Recent Expenses",
           tabBarLabel: "Recent",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="hourglass" size={size} color={color} />
+            <>
+              <Ionicons name="hourglass" size={size} color={color} />
+            </>
           ),
         }}
       />
@@ -116,6 +134,13 @@ export default function App() {
   }, []);
 
   if (initializing) return null;
+  async function onSignOutPress() {
+    try {
+      await auth().signOut();
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  }
 
   if (!user) {
     return (

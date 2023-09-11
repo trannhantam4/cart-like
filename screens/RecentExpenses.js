@@ -6,9 +6,12 @@ import { fetchExpense } from "../uti/http";
 import ErrorOverlay from "../components/UI/ErrorOverlay";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
 import auth from "@react-native-firebase/auth";
+import { firebase } from "@react-native-firebase/auth";
 // import Swiper from "react-native-swiper";
 import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
+import { GlobalStyles } from "../constant/styles";
 export default function RecentExpenses() {
+  const user = firebase.auth().currentUser;
   const imageUrls = [
     "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
     "https://imgv3.fotor.com/images/blog-cover-image/part-blurry-image.jpg",
@@ -68,6 +71,28 @@ export default function RecentExpenses() {
 
   return (
     <>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          padding: 16,
+          backgroundColor: GlobalStyles.colors.primary700,
+        }}
+      >
+        <Image
+          style={{
+            width: 51,
+            height: 51,
+            resizeMode: "contain",
+            borderRadius: 10,
+          }}
+          source={{ uri: user.photoURL }}
+        ></Image>
+        <Text style={{ padding: 16, color: "white", fontWeight: "bold" }}>
+          {user.displayName}
+        </Text>
+      </View>
+
       {/* <ViewPagerScreen /> */}
       <ExpensesOutput
         expenses={recentExpenses}
@@ -79,19 +104,3 @@ export default function RecentExpenses() {
   );
 }
 const windowWidth = Dimensions.get("window").width;
-const styles = StyleSheet.create({
-  wrapper: { height: "100%" },
-  slide: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-  image: {
-    width: windowWidth,
-    height: "100%",
-  },
-  swiperContainer: {
-    height: "20%",
-  },
-});
