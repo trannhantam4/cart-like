@@ -77,9 +77,7 @@ function ExpenseOverview() {
           title: "Recent Expenses",
           tabBarLabel: "Recent",
           tabBarIcon: ({ color, size }) => (
-            <>
-              <Ionicons name="hourglass" size={size} color={color} />
-            </>
+            <Ionicons name="hourglass" size={size} color={color} />
           ),
         }}
       />
@@ -132,14 +130,6 @@ export default function App() {
   }, []);
 
   if (initializing) return null;
-  async function onSignOutPress() {
-    try {
-      await auth().signOut();
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  }
-
   if (!user) {
     return (
       <LogIn>

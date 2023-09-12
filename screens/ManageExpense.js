@@ -7,10 +7,10 @@ import { ExpensesContext } from "../store/expenses-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { deleteExpense, storeExpense, updateExpense } from "../uti/http";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
-
+import { firebase } from "@react-native-firebase/auth";
 export default function ManageExpense({ route, navigation }) {
   const [isSubmiting, setIsSubmiting] = useState(false);
-
+  const user = firebase.auth().currentUser;
   const expenseCtx = useContext(ExpensesContext);
 
   const id = route.params?.expenseId;

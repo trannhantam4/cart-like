@@ -6,6 +6,7 @@ import Button from "../UI/Button";
 import { getDateFormat } from "../../uti/Date";
 import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("screen");
+import { firebase } from "@react-native-firebase/auth";
 export default function ExpenseForm({
   onCancel,
   onSubmit,
@@ -16,6 +17,7 @@ export default function ExpenseForm({
     price: defaultValue ? defaultValue.price.toString() : "",
 
     des: defaultValue ? defaultValue.des.toString() : "",
+    user: firebase.auth().currentUser.email.toString(),
   });
   const [selectedDate, setSelectedDate] = useState(
     defaultValue ? new Date(defaultValue.date) : new Date()
@@ -26,6 +28,7 @@ export default function ExpenseForm({
       price: +input.price,
       date: selectedDate,
       des: input.des,
+      user: input.user,
     };
     const priceIsValid = !isNaN(expenseData.price) && expenseData.price > 0;
     const desIsValid = expenseData.des.trim().length > 0;

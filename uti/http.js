@@ -2,22 +2,31 @@ import axios from "axios";
 
 const BACKEND_URL = "https://cart-like-a99e2-default-rtdb.firebaseio.com";
 
-export async function fetchExpense(query) {
-  const response = await axios.get(BACKEND_URL + "/expenses.json");
-  const expenses = [];
-  for (const key in response.data) {
-    const expenseObj = {
-      id: key,
-      date: new Date(response.data[key].date),
-      des: response.data[key].des,
-      price: response.data[key].price,
-    };
-    if (!query || expenseObj.des.toLowerCase() === query.toLowerCase()) {
-      expenses.push(expenseObj);
+export async function fetchExpense(email) {
+  try {
+    const response = await axios.get(BACKEND_URL + "/expenses.json");
+    const expenses = [];
+
+    for (const key in response.data) {
+      const expenseObj = {
+        id: key,
+        date: new Date(response.data[key].date),
+        des: response.data[key].des,
+        price: response.data[key].price,
+        user: response.data[key].user,
+      };
+
+      if (!email || expenseObj.user === email) {
+        expenses.push(expenseObj);
+      }
     }
+
+    expenses.sort((a, b) => a.date - b.date);
+    return expenses;
+  } catch (error) {
+    console.error("Error fetching expenses:", error);
+    throw error;
   }
-  expenses.sort((a, b) => a.date - b.date);
-  return expenses;
 }
 export async function storeExpense(expenseData) {
   const response = await axios.post(
