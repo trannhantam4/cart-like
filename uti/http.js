@@ -2,10 +2,11 @@ import axios from "axios";
 
 const BACKEND_URL = "https://cart-like-a99e2-default-rtdb.firebaseio.com";
 
-export async function fetchExpense(email) {
+export async function fetchExpense(user) {
   try {
     const response = await axios.get(BACKEND_URL + "/expenses.json");
     const expenses = [];
+    const email = user.email;
 
     for (const key in response.data) {
       const expenseObj = {
@@ -14,6 +15,7 @@ export async function fetchExpense(email) {
         des: response.data[key].des,
         price: response.data[key].price,
         user: response.data[key].user,
+        type: response.data[key].type,
       };
 
       if (!email || expenseObj.user === email) {

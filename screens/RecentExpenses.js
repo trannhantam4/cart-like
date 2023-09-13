@@ -43,7 +43,7 @@ export default function RecentExpenses() {
     async function getExpenses() {
       setIsFetching(true);
       try {
-        const expenses = await fetchExpense(user.email);
+        const expenses = await fetchExpense(user);
         expensesCtx.setExpense(expenses);
       } catch (error) {
         setError("Could not fetch data");
