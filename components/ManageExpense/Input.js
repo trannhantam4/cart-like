@@ -22,15 +22,17 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 12,
-    color: GlobalStyles.colors.primary100,
+    color: GlobalStyles.colors.primary500,
     marginBottom: 12,
+    fontWeight: "bold",
   },
   input: {
     backgroundColor: GlobalStyles.colors.primary100,
-    color: GlobalStyles.colors.primary700,
+    color: GlobalStyles.colors.accent500,
     padding: 6,
     borderRadius: 6,
     fontSize: 16,
+    fontWeight: "bold",
   },
   inputMulti: {
     minHeight: 100,

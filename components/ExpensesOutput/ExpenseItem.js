@@ -59,5 +59,6 @@ const styles = StyleSheet.create({
   price: {
     color: GlobalStyles.colors.primary500,
     fontWeight: "bold",
+    fontSize: 17,
   },
 });

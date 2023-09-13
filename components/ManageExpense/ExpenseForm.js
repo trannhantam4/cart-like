@@ -15,7 +15,6 @@ export default function ExpenseForm({
 }) {
   const [input, setInput] = useState({
     price: defaultValue ? defaultValue.price.toString() : "",
-
     des: defaultValue ? defaultValue.des.toString() : "",
     user: firebase.auth().currentUser.email.toString(),
     type: defaultValue ? defaultValue.type.toString() : "",
@@ -100,6 +99,7 @@ export default function ExpenseForm({
           mode="date"
           display="default"
           onChange={handleDateChange}
+          maximumDate={new Date()}
         />
       )}
 
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: height * 0.04,
     fontWeight: "bold",
-    color: GlobalStyles.colors.primary100,
+    color: GlobalStyles.colors.primary500,
     textAlign: "center",
     marginVertical: height * 0.01,
   },
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 12,
-    color: GlobalStyles.colors.primary100,
+    color: GlobalStyles.colors.primary500,
     marginBottom: 12,
   },
 });
