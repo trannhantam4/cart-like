@@ -18,6 +18,7 @@ export default function ExpenseForm({
 
     des: defaultValue ? defaultValue.des.toString() : "",
     user: firebase.auth().currentUser.email.toString(),
+    type: defaultValue ? defaultValue.type.toString() : "",
   });
   const [selectedDate, setSelectedDate] = useState(
     defaultValue ? new Date(defaultValue.date) : new Date()
@@ -29,6 +30,7 @@ export default function ExpenseForm({
       date: selectedDate,
       des: input.des,
       user: input.user,
+      type: input.type,
     };
     const priceIsValid = !isNaN(expenseData.price) && expenseData.price > 0;
     const desIsValid = expenseData.des.trim().length > 0;
@@ -81,6 +83,14 @@ export default function ExpenseForm({
             Select Date
           </Button>
         </View>
+        <Input
+          style={styles.row}
+          label="Type"
+          textInputConfig={{
+            onChangeText: inputChangeHandler.bind(this, "type"),
+            value: input.type,
+          }}
+        />
       </View>
 
       {showDatePicker && (
@@ -92,6 +102,7 @@ export default function ExpenseForm({
           onChange={handleDateChange}
         />
       )}
+
       <Input
         label="Description"
         textInputConfig={{

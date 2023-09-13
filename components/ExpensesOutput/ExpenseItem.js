@@ -5,7 +5,7 @@ import { getDateFormat } from "../../uti/Date";
 
 import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("screen");
-export default function ExpenseItem({ id, des, price, date }) {
+export default function ExpenseItem({ id, des, price, date, type }) {
   const navigation = useNavigation();
   function pressHandler() {
     navigation.navigate("ManageExpense", { expenseId: id });
@@ -18,6 +18,7 @@ export default function ExpenseItem({ id, des, price, date }) {
       <View style={styles.item}>
         <View>
           <Text style={[styles.textBase, styles.des]}>{des}</Text>
+          <Text style={styles.textBase}>{type}</Text>
           <Text style={styles.textBase}>{getDateFormat(date)}</Text>
         </View>
         <View style={styles.priceContainer}>
