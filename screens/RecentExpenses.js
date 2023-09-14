@@ -10,6 +10,7 @@ import { firebase } from "@react-native-firebase/auth";
 // import Swiper from "react-native-swiper";
 import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
 import { GlobalStyles } from "../constant/styles";
+import Info from "../components/UI/Info";
 export default function RecentExpenses() {
   const user = firebase.auth().currentUser;
   const imageUrls = [
@@ -71,28 +72,7 @@ export default function RecentExpenses() {
 
   return (
     <>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 16,
-          backgroundColor: GlobalStyles.colors.primary700,
-        }}
-      >
-        <Image
-          style={{
-            width: 51,
-            height: 51,
-            resizeMode: "contain",
-            borderRadius: 10,
-          }}
-          source={{ uri: user.photoURL }}
-        ></Image>
-        <Text style={{ padding: 16, color: "white", fontWeight: "bold" }}>
-          {user.displayName}
-        </Text>
-      </View>
-
+      <Info />
       {/* <ViewPagerScreen /> */}
       <ExpensesOutput
         expenses={recentExpenses}

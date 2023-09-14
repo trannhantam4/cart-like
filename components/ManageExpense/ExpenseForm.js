@@ -6,6 +6,7 @@ import Button from "../UI/Button";
 import { getDateFormat } from "../../uti/Date";
 import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("screen");
+import { Picker } from "@react-native-picker/picker";
 import { firebase } from "@react-native-firebase/auth";
 export default function ExpenseForm({
   onCancel,
@@ -13,6 +14,7 @@ export default function ExpenseForm({
   submitLabel,
   defaultValue,
 }) {
+  const [showType, setShowType] = useState();
   const [input, setInput] = useState({
     price: defaultValue ? defaultValue.price.toString() : "",
     des: defaultValue ? defaultValue.des.toString() : "",
@@ -82,14 +84,34 @@ export default function ExpenseForm({
             Select Date
           </Button>
         </View>
-        <Input
+      </View>
+      <View style={styles.screen}>
+        <Text style={styles.label}>Type:</Text>
+        {/* <Input
           style={styles.row}
           label="Type"
           textInputConfig={{
             onChangeText: inputChangeHandler.bind(this, "type"),
             value: input.type,
           }}
-        />
+        /> */}
+        <Picker
+          style={{
+            width: "50%",
+            color: GlobalStyles.colors.primary500,
+            fontWeight: "bold",
+            backgroundColor: GlobalStyles.colors.primary700,
+          }}
+          selectedValue={input.type}
+          mode="dropdown"
+          onValueChange={inputChangeHandler.bind(this, "type")}
+        >
+          <Picker.Item label="Food" value="Food" />
+          <Picker.Item label="Invest" value="Invest" />
+          <Picker.Item label="Fashion" value="Fashion" />
+          <Picker.Item label="Health" value="Health" />
+          <Picker.Item label="Other" value="Other" />
+        </Picker>
       </View>
 
       {showDatePicker && (
@@ -158,5 +180,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: GlobalStyles.colors.primary500,
     marginBottom: 12,
+    fontWeight: "bold",
   },
 });
