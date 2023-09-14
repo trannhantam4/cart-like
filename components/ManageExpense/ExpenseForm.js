@@ -19,7 +19,7 @@ export default function ExpenseForm({
     price: defaultValue ? defaultValue.price.toString() : "",
     des: defaultValue ? defaultValue.des.toString() : "",
     user: firebase.auth().currentUser.email.toString(),
-    type: defaultValue ? defaultValue.type.toString() : "",
+    type: defaultValue ? defaultValue.type.toString() : "Food",
   });
   const [selectedDate, setSelectedDate] = useState(
     defaultValue ? new Date(defaultValue.date) : new Date()
