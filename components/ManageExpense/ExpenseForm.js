@@ -67,16 +67,6 @@ export default function ExpenseForm({
             value: input.price,
           }}
         />
-        {/* <Input
-          style={styles.row}
-          label="Date"
-          textInputConfig={{
-            placeHolder: "YYYY-MM-DD",
-            maxLength: 10,
-            onChangeText: inputChangeHandler.bind(this, "date"),
-            value: input.date,
-          }}
-        /> */}
         <View style={styles.screen}>
           <Text style={styles.label}>Date: {getDateFormat(selectedDate)}</Text>
           <Button style={styles.button} onPress={() => setShowDatePicker(true)}>
@@ -86,14 +76,6 @@ export default function ExpenseForm({
       </View>
       <View style={styles.screen}>
         <Text style={styles.label}>Type:</Text>
-        {/* <Input
-          style={styles.row}
-          label="Type"
-          textInputConfig={{
-            onChangeText: inputChangeHandler.bind(this, "type"),
-            value: input.type,
-          }}
-        /> */}
         <Picker
           style={{
             width: "50%",
