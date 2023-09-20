@@ -28,6 +28,7 @@ export default function Info() {
           padding: 16,
           color: GlobalStyles.colors.primary500,
           fontWeight: "bold",
+          fontSize: 20,
         }}
       >
         {user.displayName}

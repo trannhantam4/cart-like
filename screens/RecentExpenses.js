@@ -11,6 +11,7 @@ import { firebase } from "@react-native-firebase/auth";
 import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
 import { GlobalStyles } from "../constant/styles";
 import Info from "../components/UI/Info";
+
 export default function RecentExpenses() {
   const user = firebase.auth().currentUser;
   const imageUrls = [
@@ -73,6 +74,7 @@ export default function RecentExpenses() {
   return (
     <>
       <Info />
+
       {/* <ViewPagerScreen /> */}
       <ExpensesOutput
         expenses={recentExpenses}

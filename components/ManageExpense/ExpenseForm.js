@@ -14,7 +14,6 @@ export default function ExpenseForm({
   submitLabel,
   defaultValue,
 }) {
-  const [showType, setShowType] = useState();
   const [input, setInput] = useState({
     price: defaultValue ? defaultValue.price.toString() : "",
     des: defaultValue ? defaultValue.des.toString() : "",

@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet } from "react-native";
 import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constant/styles";
 import { Picker } from "@react-native-picker/picker";
+
 export default function ExpensesSummary({
   expenses,
   period,
@@ -12,6 +13,8 @@ export default function ExpensesSummary({
   const expensesSum = expenses.reduce((sum, expense) => {
     return sum + expense.price;
   }, 0);
+  const formattedSum = expensesSum.toLocaleString(); // Format sum with dots
+
   const pickerRef = React.useRef();
 
   function open() {
@@ -42,10 +45,11 @@ export default function ExpensesSummary({
         <Text style={styles.period}>Total</Text>
       )}
 
-      <Text style={styles.sum}>{expensesSum.toFixed(0)}.000 VND</Text>
+      <Text style={styles.sum}>{formattedSum}.000 VND</Text>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     height: "10%",

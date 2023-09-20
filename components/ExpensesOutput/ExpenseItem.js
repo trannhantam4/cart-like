@@ -7,6 +7,10 @@ import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("screen");
 export default function ExpenseItem({ id, des, price, date, type }) {
   const navigation = useNavigation();
+
+  // Format the price with dots every three digits
+  const formattedPrice = price.toLocaleString();
+
   function pressHandler() {
     navigation.navigate("ManageExpense", { expenseId: id });
   }
@@ -22,7 +26,7 @@ export default function ExpenseItem({ id, des, price, date, type }) {
           <Text style={styles.textBase}>{getDateFormat(date)}</Text>
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}> {price.toFixed(0)}.000</Text>
+          <Text style={styles.price}> {formattedPrice}.000</Text>
         </View>
       </View>
     </Pressable>
@@ -54,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 4,
-    width: width * 0.35,
+    width: width * 0.3,
   },
   price: {
     color: GlobalStyles.colors.primary500,
