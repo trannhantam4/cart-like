@@ -20,7 +20,12 @@ export default function ExpenseItem({ id, des, price, date, type }) {
       style={({ pressed }) => pressed && styles.pressed}
     >
       <View style={styles.item}>
-        <View>
+        <View
+          style={{
+            borderLeftColor: GlobalStyles.colors.primary700,
+            borderLeftWidth: 2,
+          }}
+        >
           <Text style={[styles.textBase, styles.des]}>{des}</Text>
           <Text style={styles.textBase}>{type}</Text>
           <Text style={styles.textBase}>{getDateFormat(date)}</Text>
