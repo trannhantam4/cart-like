@@ -22,8 +22,9 @@ export default function ExpenseItem({ id, des, price, date, type }) {
       <View style={styles.item}>
         <View
           style={{
-            borderLeftColor: GlobalStyles.colors.primary700,
-            borderLeftWidth: 2,
+            borderRightColor: GlobalStyles.colors.primary700,
+            borderRightWidth: 2,
+            width: "58%",
           }}
         >
           <Text style={[styles.textBase, styles.des]}>{des}</Text>
