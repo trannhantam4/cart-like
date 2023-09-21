@@ -1,18 +1,74 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState } from "react";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 import { getDateMinusDays } from "../uti/Date";
 import { ExpensesContext } from "../store/expenses-context";
 import { fetchExpense } from "../uti/http";
 import ErrorOverlay from "../components/UI/ErrorOverlay";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
-import auth from "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/auth";
-// import Swiper from "react-native-swiper";
-import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
-import { GlobalStyles } from "../constant/styles";
+import { StyleSheet, Dimensions, Text, View } from "react-native";
 import Info from "../components/UI/Info";
-
+import { PieChart } from "react-native-chart-kit";
 export default function RecentExpenses() {
+  const MyPieChart = () => {
+    return (
+      <>
+        <Text style={styles.header}>Pie Chart</Text>
+        <PieChart
+          data={[
+            {
+              name: "Seoul",
+              population: 21500000,
+              color: "rgba(131, 167, 234, 1)",
+              legendFontColor: "#7F7F7F",
+              legendFontSize: 15,
+            },
+            {
+              name: "Toronto",
+              population: 2800000,
+              color: "#F00",
+              legendFontColor: "#7F7F7F",
+              legendFontSize: 15,
+            },
+            {
+              name: "New York",
+              population: 8538000,
+              color: "#ffffff",
+              legendFontColor: "#7F7F7F",
+              legendFontSize: 15,
+            },
+            {
+              name: "Moscow",
+              population: 11920000,
+              color: "rgb(0, 0, 255)",
+              legendFontColor: "#7F7F7F",
+              legendFontSize: 15,
+            },
+          ]}
+          width={Dimensions.get("window").width - 16}
+          height={220}
+          chartConfig={{
+            backgroundColor: "#1cc910",
+            backgroundGradientFrom: "#eff3ff",
+            backgroundGradientTo: "#efefef",
+            decimalPlaces: 2,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+              borderRadius: 16,
+            },
+          }}
+          style={{
+            marginVertical: 8,
+            borderRadius: 16,
+          }}
+          accessor="population"
+          backgroundColor="transparent"
+          paddingLeft="15"
+          absolute //for the absolute number remove if you want percentage
+        />
+      </>
+    );
+  };
   const user = firebase.auth().currentUser;
   const imageUrls = [
     "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
@@ -23,23 +79,6 @@ export default function RecentExpenses() {
   const expensesCtx = useContext(ExpensesContext);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState("");
-  // const ViewPagerScreen = () => {
-  //   return (
-  //     <View style={styles.swiperContainer}>
-  //       <Swiper style={styles.wrapper} showsButtons={true}>
-  //         {imageUrls.map((imageUrl, index) => (
-  //           <View key={index} style={styles.slide}>
-  //             <Image
-  //               source={{ uri: imageUrl }}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             />
-  //           </View>
-  //         ))}
-  //       </Swiper>
-  //     </View>
-  //   );
-  // };
 
   useEffect(() => {
     async function getExpenses() {
@@ -74,8 +113,6 @@ export default function RecentExpenses() {
   return (
     <>
       <Info />
-
-      {/* <ViewPagerScreen /> */}
       <ExpensesOutput
         expenses={recentExpenses}
         expensesPeriod="Last 7 days"

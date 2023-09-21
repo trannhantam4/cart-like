@@ -22,7 +22,7 @@ export default function ExpenseItem({ id, des, price, date, type }) {
       <View style={styles.item}>
         <View
           style={{
-            borderRightColor: GlobalStyles.colors.primary700,
+            borderRightColor: GlobalStyles.colors.primary500,
             borderRightWidth: 2,
             width: "58%",
           }}
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 12,
     marginVertical: 8,
-    backgroundColor: GlobalStyles.colors.primary500,
+    backgroundColor: GlobalStyles.colors.primary50,
     flexDirection: "row",
     justifyContent: "space-between",
     borderRadius: 6,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
   },
   textBase: {
-    color: GlobalStyles.colors.primary50,
+    color: GlobalStyles.colors.primary500,
   },
   des: { fontSize: 16, marginBottom: 4, fontWeight: "bold" },
   priceContainer: {

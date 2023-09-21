@@ -1,10 +1,11 @@
+import React, { memo } from "react";
 import { View, Text, Image } from "react-native";
-import React from "react";
 import { GlobalStyles } from "../../constant/styles";
 import { firebase } from "@react-native-firebase/auth";
 
-export default function Info() {
+const Info = () => {
   const user = firebase.auth().currentUser;
+
   return (
     <View
       style={{
@@ -35,4 +36,6 @@ export default function Info() {
       </Text>
     </View>
   );
-}
+};
+
+export default memo(Info);
