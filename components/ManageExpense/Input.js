@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   input: {
-    backgroundColor: GlobalStyles.colors.primary100,
-    color: GlobalStyles.colors.accent500,
+    backgroundColor: "#fff",
+    color: GlobalStyles.colors.primary500,
     padding: 6,
     borderRadius: 6,
     fontSize: 16,

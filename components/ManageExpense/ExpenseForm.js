@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Dimensions, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Alert,
+  KeyboardAvoidingView,
+} from "react-native";
 import React, { useState } from "react";
 import Input from "./Input";
 import { GlobalStyles } from "../../constant/styles";
@@ -55,7 +62,7 @@ export default function ExpenseForm({
     }
   };
   return (
-    <View style={styles.form}>
+    <KeyboardAvoidingView style={styles.form}>
       <Text style={styles.title}>Your Expense</Text>
       <View style={styles.inputRow}>
         <Input
@@ -65,6 +72,7 @@ export default function ExpenseForm({
             keyboardType: "decimal-pad",
             onChangeText: inputChangeHandler.bind(this, "price"),
             value: input.price,
+            placeholder: "15 = 15.000 VND",
           }}
         />
         <View style={styles.screen}>
@@ -114,6 +122,7 @@ export default function ExpenseForm({
           autoCapitalize: "sentences",
           onChangeText: inputChangeHandler.bind(this, "des"),
           value: input.des,
+          placeholder: "name of thing(s) or anything",
         }}
       />
       <View style={styles.buttonContainer}>
@@ -124,7 +133,7 @@ export default function ExpenseForm({
           {submitLabel}
         </Button>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 const styles = StyleSheet.create({
