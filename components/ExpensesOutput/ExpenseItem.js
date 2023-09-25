@@ -32,7 +32,7 @@ export default function ExpenseItem({ id, des, price, date, type }) {
           <Text style={styles.textBase}>{getDateFormat(date)}</Text>
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}> {formattedPrice}.000</Text>
+          <Text style={styles.price}> {formattedPrice}</Text>
         </View>
       </View>
     </Pressable>
