@@ -16,8 +16,9 @@ import {
 } from "@react-native-google-signin/google-signin";
 import auth from "@react-native-firebase/auth";
 import LogIn from "./screens/LogIn";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { firebase } from "@react-native-firebase/auth";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBE1XY0m9EggujbamGiS8ahLPBCG3nfEis",
   authDomain: "cart-like-a99e2.firebaseapp.com",
@@ -31,18 +32,19 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+
 const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
+
 function ExpenseOverview() {
-  const user = firebase.auth().currentUser;
   async function onSignOutPress() {
     try {
       await auth().signOut();
     } catch (error) {
       console.error("Error signing out:", error);
     }
-    console.log(user);
   }
+
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -95,30 +97,16 @@ function ExpenseOverview() {
     </BottomTabs.Navigator>
   );
 }
+
 export default function App() {
   GoogleSignin.configure({
     webClientId:
       "773723594890-hnajs69c2k3o6gffaetptkq9jjecriti.apps.googleusercontent.com",
   });
+
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
-  async function onGoogleButtonPress() {
-    // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    // Sign-in the user with the credential
-    const userSignIn = auth().signInWithCredential(googleCredential);
-    userSignIn
-      .then((user) => {
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  const [user, setUser] = useState(null);
+
   function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) setInitializing(false);
@@ -130,39 +118,89 @@ export default function App() {
   }, []);
 
   if (initializing) return null;
-  if (!user) {
-    return (
-      <LogIn>
-        <GoogleSigninButton onPress={onGoogleButtonPress} />
-      </LogIn>
-    );
-  }
+
   return (
     <>
       <StatusBar style="light" />
       <ExpensesContextProvider>
         <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="ExpenseOverview"
-            screenOptions={{
-              headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-              headerTintColor: "white",
-            }}
-          >
-            <Stack.Screen
-              name="ManageExpense"
-              component={ManageExpense}
-              options={{ presentation: "modal" }}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="ExpenseOverview"
-              component={ExpenseOverview}
-            />
-          </Stack.Navigator>
+          {user ? (
+            <Stack.Navigator
+              initialRouteName="ExpenseOverview"
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: GlobalStyles.colors.primary500,
+                },
+                headerTintColor: "white",
+              }}
+            >
+              <Stack.Screen
+                name="ManageExpense"
+                component={ManageExpense}
+                options={{ presentation: "modal" }}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="ExpenseOverview"
+                component={ExpenseOverview}
+              />
+            </Stack.Navigator>
+          ) : (
+            <Stack.Navigator
+              initialRouteName="SelectAccount"
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: GlobalStyles.colors.primary500,
+                },
+                headerTintColor: "white",
+              }}
+            >
+              <Stack.Screen
+                name="SelectAccount"
+                component={SelectAccountScreen}
+                options={{ title: "Select Account" }}
+              />
+              <Stack.Screen
+                name="LogIn"
+                component={LogIn}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          )}
         </NavigationContainer>
       </ExpensesContextProvider>
     </>
+  );
+}
+async function onGoogleButtonPress(navigation) {
+  // Clear cached credentials
+  await GoogleSignin.revokeAccess();
+  await GoogleSignin.signOut();
+
+  // Check if your device supports Google Play
+  await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+  // Get the users ID token
+  const { idToken } = await GoogleSignin.signIn();
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  // Sign-in the user with the credential
+  const userSignIn = auth().signInWithCredential(googleCredential);
+  userSignIn
+    .then((user) => {
+      console.log(user);
+      navigation.navigate("ExpenseOverview");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+// Create a new screen for selecting the account
+function SelectAccountScreen({ navigation }) {
+  return (
+    <LogIn>
+      <GoogleSigninButton onPress={() => onGoogleButtonPress(navigation)} />
+    </LogIn>
   );
 }
 
