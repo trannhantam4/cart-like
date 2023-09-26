@@ -16,9 +16,8 @@ import {
 } from "@react-native-google-signin/google-signin";
 import auth from "@react-native-firebase/auth";
 import LogIn from "./screens/LogIn";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { firebase } from "@react-native-firebase/auth";
-import UserManageScreen from "./screens/UserManageScreen";
 const firebaseConfig = {
   apiKey: "AIzaSyBE1XY0m9EggujbamGiS8ahLPBCG3nfEis",
   authDomain: "cart-like-a99e2.firebaseapp.com",
@@ -32,10 +31,11 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+
 const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
+
 function ExpenseOverview() {
-  const user = firebase.auth().currentUser;
   async function onSignOutPress() {
     try {
       await auth().signOut();
@@ -43,6 +43,7 @@ function ExpenseOverview() {
       console.error("Error signing out:", error);
     }
   }
+
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -96,35 +97,32 @@ function ExpenseOverview() {
     </BottomTabs.Navigator>
   );
 }
+
 export default function App() {
   GoogleSignin.configure({
     webClientId:
       "773723594890-hnajs69c2k3o6gffaetptkq9jjecriti.apps.googleusercontent.com",
   });
+
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState(null);
-
+  const [user, setUser] = useState();
   async function onGoogleButtonPress() {
-    try {
-      setUser(null);
-      await GoogleSignin.hasPlayServices({
-        showPlayServicesUpdateDialog: true,
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    // Sign-in the user with the credential
+    const userSignIn = auth().signInWithCredential(googleCredential);
+    userSignIn
+      .then((user) => {
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      const { idToken } = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      const userSignIn = auth().signInWithCredential(googleCredential);
-      userSignIn
-        .then((user) => {
-          console.log(user);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log("Error signing in with Google:", error);
-    }
   }
-
   function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) setInitializing(false);
@@ -136,13 +134,7 @@ export default function App() {
   }, []);
 
   if (initializing) return null;
-  if (!user) {
-    return (
-      <LogIn>
-        <GoogleSigninButton onPress={onGoogleButtonPress} />
-      </LogIn>
-    );
-  }
+
   return (
     <>
       <StatusBar style="light" />
@@ -165,15 +157,41 @@ export default function App() {
               name="ExpenseOverview"
               component={ExpenseOverview}
             />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="UserManageScreen"
-              component={UserManageScreen}
-            />
           </Stack.Navigator>
         </NavigationContainer>
       </ExpensesContextProvider>
     </>
+  );
+}
+async function onGoogleButtonPress(navigation) {
+  // Clear cached credentials
+  await GoogleSignin.revokeAccess();
+  await GoogleSignin.signOut();
+
+  // Check if your device supports Google Play
+  await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+  // Get the users ID token
+  const { idToken } = await GoogleSignin.signIn();
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  // Sign-in the user with the credential
+  const userSignIn = auth().signInWithCredential(googleCredential);
+  userSignIn
+    .then((user) => {
+      console.log(user);
+      navigation.navigate("ExpenseOverview");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+// Create a new screen for selecting the account
+function SelectAccountScreen({ navigation }) {
+  return (
+    <LogIn>
+      <GoogleSigninButton onPress={() => onGoogleButtonPress(navigation)} />
+    </LogIn>
   );
 }
 
