@@ -18,6 +18,7 @@ import auth from "@react-native-firebase/auth";
 import LogIn from "./screens/LogIn";
 import { useState, useEffect, useContext } from "react";
 import { firebase } from "@react-native-firebase/auth";
+import UserManageScreen from "./screens/UserManageScreen";
 const firebaseConfig = {
   apiKey: "AIzaSyBE1XY0m9EggujbamGiS8ahLPBCG3nfEis",
   authDomain: "cart-like-a99e2.firebaseapp.com",
@@ -41,7 +42,6 @@ function ExpenseOverview() {
     } catch (error) {
       console.error("Error signing out:", error);
     }
-    console.log(user);
   }
   return (
     <BottomTabs.Navigator
@@ -50,6 +50,7 @@ function ExpenseOverview() {
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        tabBarInactiveTintColor: "#fff",
         headerRight: ({ tintColor }) => (
           <IconButton
             icon="add"
@@ -101,24 +102,29 @@ export default function App() {
       "773723594890-hnajs69c2k3o6gffaetptkq9jjecriti.apps.googleusercontent.com",
   });
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
+
   async function onGoogleButtonPress() {
-    // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    // Sign-in the user with the credential
-    const userSignIn = auth().signInWithCredential(googleCredential);
-    userSignIn
-      .then((user) => {
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      setUser(null);
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
       });
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const userSignIn = auth().signInWithCredential(googleCredential);
+      userSignIn
+        .then((user) => {
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error signing in with Google:", error);
+    }
   }
+
   function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) setInitializing(false);
@@ -158,6 +164,11 @@ export default function App() {
               options={{ headerShown: false }}
               name="ExpenseOverview"
               component={ExpenseOverview}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="UserManageScreen"
+              component={UserManageScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

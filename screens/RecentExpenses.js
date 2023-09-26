@@ -11,11 +11,7 @@ import Info from "../components/UI/Info";
 import { SafeAreaView } from "react-native";
 export default function RecentExpenses() {
   const user = firebase.auth().currentUser;
-  const imageUrls = [
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-    "https://imgv3.fotor.com/images/blog-cover-image/part-blurry-image.jpg",
-    "https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg",
-  ];
+
   const [selectedDate, setSelectedDate] = useState(7);
   const expensesCtx = useContext(ExpensesContext);
   const [isFetching, setIsFetching] = useState(true);
@@ -53,7 +49,8 @@ export default function RecentExpenses() {
 
   return (
     <>
-      <Info />
+      {user ? <Info /> : null}
+
       <ExpensesOutput
         expenses={recentExpenses}
         expensesPeriod="Last 7 days"

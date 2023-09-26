@@ -53,7 +53,7 @@ const AutocompleteTextInput = ({ inputValue, onInputChange }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Price</Text>
+      <Text style={styles.label}>Price:</Text>
       <TextInput
         style={styles.input}
         value={inputValue}
