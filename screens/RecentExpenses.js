@@ -1,45 +1,21 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState } from "react";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 import { getDateMinusDays } from "../uti/Date";
 import { ExpensesContext } from "../store/expenses-context";
 import { fetchExpense } from "../uti/http";
 import ErrorOverlay from "../components/UI/ErrorOverlay";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
-import auth from "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/auth";
-// import Swiper from "react-native-swiper";
-import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
-import { GlobalStyles } from "../constant/styles";
+import { StyleSheet, Dimensions, Text, View } from "react-native";
 import Info from "../components/UI/Info";
-
+import { SafeAreaView } from "react-native";
 export default function RecentExpenses() {
   const user = firebase.auth().currentUser;
-  const imageUrls = [
-    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-    "https://imgv3.fotor.com/images/blog-cover-image/part-blurry-image.jpg",
-    "https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg",
-  ];
+
   const [selectedDate, setSelectedDate] = useState(7);
   const expensesCtx = useContext(ExpensesContext);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState("");
-  // const ViewPagerScreen = () => {
-  //   return (
-  //     <View style={styles.swiperContainer}>
-  //       <Swiper style={styles.wrapper} showsButtons={true}>
-  //         {imageUrls.map((imageUrl, index) => (
-  //           <View key={index} style={styles.slide}>
-  //             <Image
-  //               source={{ uri: imageUrl }}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             />
-  //           </View>
-  //         ))}
-  //       </Swiper>
-  //     </View>
-  //   );
-  // };
 
   useEffect(() => {
     async function getExpenses() {
@@ -73,9 +49,8 @@ export default function RecentExpenses() {
 
   return (
     <>
-      <Info />
+      {user ? <Info /> : null}
 
-      {/* <ViewPagerScreen /> */}
       <ExpensesOutput
         expenses={recentExpenses}
         expensesPeriod="Last 7 days"

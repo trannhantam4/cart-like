@@ -45,7 +45,7 @@ export default function ExpensesSummary({
         <Text style={styles.period}>Total</Text>
       )}
 
-      <Text style={styles.sum}>{formattedSum}.000 VND</Text>
+      <Text style={styles.sum}>{formattedSum} VND</Text>
     </View>
   );
 }
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    elevation: 8,
   },
   period: {
     fontSize: 16,

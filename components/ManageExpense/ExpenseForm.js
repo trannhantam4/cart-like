@@ -1,5 +1,12 @@
-import { View, Text, StyleSheet, Dimensions, Alert } from "react-native";
 import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Alert,
+  KeyboardAvoidingView,
+} from "react-native";
 import Input from "./Input";
 import { GlobalStyles } from "../../constant/styles";
 import Button from "../UI/Button";
@@ -8,6 +15,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("screen");
 import { Picker } from "@react-native-picker/picker";
 import { firebase } from "@react-native-firebase/auth";
+import AutocompleteTextInput from "./AutocompleteTextInput";
+
 export default function ExpenseForm({
   onCancel,
   onSubmit,
@@ -24,28 +33,55 @@ export default function ExpenseForm({
     defaultValue ? new Date(defaultValue.date) : new Date()
   );
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  // Function to handle text input changes for price
+  const handlePriceChange = (formattedPrice) => {
+    setInput((curInput) => {
+      return { ...curInput, price: formattedPrice };
+    });
+  };
+
   function submitHandler() {
+    // Remove dots or commas from the price input and parse it as a float
+    const formattedPrice = input.price.replace(/[.,]/g, "");
     const expenseData = {
-      price: +input.price,
+      price: parseFloat(formattedPrice),
       date: selectedDate,
       des: input.des,
       user: input.user,
       type: input.type,
     };
+
     const priceIsValid = !isNaN(expenseData.price) && expenseData.price > 0;
     const desIsValid = expenseData.des.trim().length > 0;
 
-    if (!priceIsValid || !desIsValid) {
-      Alert.alert("Invalid Input!!", "Please check you input");
+    if (!priceIsValid) {
+      Alert.alert("Invalid price!!", "Please check your price");
       return;
     }
+    if (!desIsValid) {
+      Alert.alert("Invalid des!!", "Please check your des");
+      return;
+    }
+
     onSubmit(expenseData);
   }
+
   function inputChangeHandler(inputId, enteredValue) {
-    setInput((curInput) => {
-      return { ...curInput, [inputId]: enteredValue };
-    });
+    if (inputId === "price") {
+      // Remove any dots or commas from the entered value
+      const formattedValue = enteredValue.replace(/[.,]/g, "");
+
+      setInput((curInput) => {
+        return { ...curInput, [inputId]: formattedValue };
+      });
+    } else {
+      setInput((curInput) => {
+        return { ...curInput, [inputId]: enteredValue };
+      });
+    }
   }
+
   const handleDateChange = (event, selected) => {
     if (event.type === "set") {
       setShowDatePicker(false);
@@ -54,18 +90,14 @@ export default function ExpenseForm({
       setShowDatePicker(false);
     }
   };
+
   return (
-    <View style={styles.form}>
+    <KeyboardAvoidingView style={styles.form}>
       <Text style={styles.title}>Your Expense</Text>
       <View style={styles.inputRow}>
-        <Input
-          style={styles.row}
-          label="Price (x1000)"
-          textInputConfig={{
-            keyboardType: "decimal-pad",
-            onChangeText: inputChangeHandler.bind(this, "price"),
-            value: input.price,
-          }}
+        <AutocompleteTextInput
+          inputValue={input.price}
+          onInputChange={handlePriceChange}
         />
         <View style={styles.screen}>
           <Text style={styles.label}>Date: {getDateFormat(selectedDate)}</Text>
@@ -114,6 +146,7 @@ export default function ExpenseForm({
           autoCapitalize: "sentences",
           onChangeText: inputChangeHandler.bind(this, "des"),
           value: input.des,
+          placeholder: "name of thing(s) or anything",
         }}
       />
       <View style={styles.buttonContainer}>
@@ -124,9 +157,10 @@ export default function ExpenseForm({
           {submitLabel}
         </Button>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
+
 const styles = StyleSheet.create({
   form: {
     marginTop: height * 0.05,

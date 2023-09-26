@@ -22,8 +22,9 @@ export default function ExpenseItem({ id, des, price, date, type }) {
       <View style={styles.item}>
         <View
           style={{
-            borderLeftColor: GlobalStyles.colors.primary700,
-            borderLeftWidth: 2,
+            borderRightColor: GlobalStyles.colors.primary500,
+            borderRightWidth: 2,
+            width: "58%",
           }}
         >
           <Text style={[styles.textBase, styles.des]}>{des}</Text>
@@ -31,7 +32,7 @@ export default function ExpenseItem({ id, des, price, date, type }) {
           <Text style={styles.textBase}>{getDateFormat(date)}</Text>
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}> {formattedPrice}.000</Text>
+          <Text style={styles.price}> {formattedPrice}</Text>
         </View>
       </View>
     </Pressable>
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 12,
     marginVertical: 8,
-    backgroundColor: GlobalStyles.colors.primary500,
+    backgroundColor: GlobalStyles.colors.primary50,
     flexDirection: "row",
     justifyContent: "space-between",
     borderRadius: 6,
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
   },
   textBase: {
-    color: GlobalStyles.colors.primary50,
+    color: GlobalStyles.colors.primary500,
   },
   des: { fontSize: 16, marginBottom: 4, fontWeight: "bold" },
   priceContainer: {

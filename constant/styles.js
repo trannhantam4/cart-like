@@ -1,6 +1,6 @@
 export const GlobalStyles = {
   colors: {
-    primary50: "#e4d9fd",
+    primary50: "#f5f5f5",
     primary100: "#2ECC71",
     primary200: "#a281f0",
     primary400: "#5721d4",
@@ -8,19 +8,5 @@ export const GlobalStyles = {
     primary700: "#A9DFBF",
     primary800: "#200364",
     accent500: "#f7bc0c",
-    error50: "#fcc4e4",
-    error500: "#9b095c",
-    gray500: "#39324a",
-    gray700: "#221c37",
-    green200: "#34D399",
-    green300: "#10B981",
-    green400: "#059669",
-    bleen200: "#06B6D4",
-    green100: "#22C55E",
-    green500: "#16A34A",
-    green800: "#065F46",
-    BaseGreen: "#2ECC71",
-    MediumGreen: "#27AE60",
-    LightGreen: "#A9DFBF",
   },
 };
