@@ -5,7 +5,7 @@ import { GlobalStyles } from "../constant/styles";
 export default function LogIn({ children }) {
   return (
     <View style={styles.screen}>
-      <Text style={styles.text}>Log in with:</Text>
+      <Text style={styles.text}>Log in with</Text>
       {children}
     </View>
   );
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 25,
     padding: 16,
-    color: GlobalStyles.primary200,
+    color: GlobalStyles.colors.primary500,
   },
 });

@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet } from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -133,7 +133,34 @@ export default function App() {
   if (!user) {
     return (
       <LogIn>
-        <Button title="Google Signin" onPress={onGoogleButtonPress}></Button>
+        <TouchableOpacity
+          style={{
+            borderWidth: 2,
+            borderColor: GlobalStyles.colors.primary500,
+            width: "50%",
+            height: "5%",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+            borderRadius: 10,
+          }}
+          onPress={onGoogleButtonPress}
+        >
+          <Ionicons
+            name="logo-google"
+            size={24}
+            color={GlobalStyles.colors.primary500}
+          />
+          <Text
+            style={{
+              fontSize: 20,
+              color: GlobalStyles.colors.primary500,
+              fontWeight: "bold",
+            }}
+          >
+            Google
+          </Text>
+        </TouchableOpacity>
       </LogIn>
     );
   }
