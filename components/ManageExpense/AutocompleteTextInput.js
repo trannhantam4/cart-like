@@ -98,7 +98,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   suggestionsContainer: {
-    marginTop: 8,
+    margin: 8,
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   suggestion: {
     fontSize: 16,

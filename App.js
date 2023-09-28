@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { Button, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -27,7 +27,6 @@ const firebaseConfig = {
   messagingSenderId: "773723594890",
   appId: "1:773723594890:web:e530c71defdf6da3ffcd73",
 };
-
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
@@ -43,7 +42,6 @@ function ExpenseOverview() {
       console.error("Error signing out:", error);
     }
   }
-
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -97,13 +95,11 @@ function ExpenseOverview() {
     </BottomTabs.Navigator>
   );
 }
-
 export default function App() {
   GoogleSignin.configure({
     webClientId:
       "773723594890-hnajs69c2k3o6gffaetptkq9jjecriti.apps.googleusercontent.com",
   });
-
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   async function onGoogleButtonPress() {
@@ -134,7 +130,13 @@ export default function App() {
   }, []);
 
   if (initializing) return null;
-
+  if (!user) {
+    return (
+      <LogIn>
+        <Button title="Google Signin" onPress={onGoogleButtonPress}></Button>
+      </LogIn>
+    );
+  }
   return (
     <>
       <StatusBar style="light" />
