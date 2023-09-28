@@ -25,7 +25,6 @@ export default function UserManageScreen() {
         "Error",
         "An error occurred while updating the display name."
       );
-      console.error("Error updating display name:", error);
     }
   };
   return (

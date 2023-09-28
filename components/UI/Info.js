@@ -3,12 +3,15 @@ import { View, Text, Image } from "react-native";
 import { GlobalStyles } from "../../constant/styles";
 import { firebase } from "@react-native-firebase/auth";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { useNavigation } from "@react-navigation/native";
 const Info = () => {
   const user = firebase.auth().currentUser;
-
+  const navigation = useNavigation();
+  const navigateUserManage = () => {
+    navigation.navigate("UserManageScreen");
+  };
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={navigateUserManage}>
       <View
         style={{
           flexDirection: "row",

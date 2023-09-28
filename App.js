@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -18,6 +18,7 @@ import auth from "@react-native-firebase/auth";
 import LogIn from "./screens/LogIn";
 import { useState, useEffect } from "react";
 import { firebase } from "@react-native-firebase/auth";
+import UserManageScreen from "./screens/UserManageScreen";
 const firebaseConfig = {
   apiKey: "AIzaSyBE1XY0m9EggujbamGiS8ahLPBCG3nfEis",
   authDomain: "cart-like-a99e2.firebaseapp.com",
@@ -105,6 +106,8 @@ export default function App() {
   async function onGoogleButtonPress() {
     // Check if your device supports Google Play
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
     // Get the users ID token
     const { idToken } = await GoogleSignin.signIn();
     // Create a Google credential with the token
@@ -134,16 +137,7 @@ export default function App() {
     return (
       <LogIn>
         <TouchableOpacity
-          style={{
-            borderWidth: 2,
-            borderColor: GlobalStyles.colors.primary500,
-            width: "50%",
-            height: "5%",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            borderRadius: 10,
-          }}
+          style={styles.loginIcon}
           onPress={onGoogleButtonPress}
         >
           <Ionicons
@@ -151,15 +145,7 @@ export default function App() {
             size={24}
             color={GlobalStyles.colors.primary500}
           />
-          <Text
-            style={{
-              fontSize: 20,
-              color: GlobalStyles.colors.primary500,
-              fontWeight: "bold",
-            }}
-          >
-            Google
-          </Text>
+          <Text style={styles.loginText}>Google</Text>
         </TouchableOpacity>
       </LogIn>
     );
@@ -182,9 +168,14 @@ export default function App() {
               options={{ presentation: "modal" }}
             />
             <Stack.Screen
-              options={{ headerShown: false }}
+              options={{ headerShown: false, presentation: "modal" }}
               name="ExpenseOverview"
               component={ExpenseOverview}
+            />
+            <Stack.Screen
+              options={{ headerShown: false, presentation: "modal" }}
+              name="UserManageScreen"
+              component={UserManageScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
@@ -231,11 +222,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   screen: {
     flex: 1,
     justifyContent: "center",
     width: "50%",
     alignSelf: "center",
+  },
+  loginText: {
+    fontSize: 20,
+    color: GlobalStyles.colors.primary500,
+    fontWeight: "bold",
+  },
+  loginIcon: {
+    borderWidth: 2,
+    borderColor: GlobalStyles.colors.primary500,
+    width: "50%",
+    height: "5%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRadius: 10,
   },
 });
