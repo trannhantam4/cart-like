@@ -19,7 +19,7 @@ export default function UserManageScreen() {
       await user.updateProfile({
         displayName: newDisplayName,
       });
-      Alert.alert("Success", "Display name updated successfully.");
+      Alert.alert("Success", "To see changes please restart app");
     } catch (error) {
       Alert.alert(
         "Error",
