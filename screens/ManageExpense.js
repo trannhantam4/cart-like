@@ -62,7 +62,7 @@ export default function ManageExpense({ route, navigation }) {
         <View style={styles.deleteContainer}>
           <IconButton
             icon="trash"
-            color={GlobalStyles.colors.primary500}
+            color={"red"}
             size={36}
             onPress={deleteHandler}
           />

@@ -102,7 +102,7 @@ export default function ExpenseForm({
     >
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
+          <View style={{ flex: 1 }}>
             <Text style={styles.title}>Your Expense</Text>
             <View style={styles.inputRow}>
               <AutocompleteTextInput
@@ -128,10 +128,10 @@ export default function ExpenseForm({
                   width: "50%",
                   color: GlobalStyles.colors.primary500,
                   fontWeight: "bold",
-                  backgroundColor: GlobalStyles.colors.primary700,
+                  backgroundColor: "#fff",
                 }}
                 selectedValue={input.type}
-                mode="dropdown"
+                mode="dialog"
                 onValueChange={inputChangeHandler.bind(this, "type")}
               >
                 <Picker.Item label="Food" value="Food" />
@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+    flex: 1,
   },
   row: {
     flex: 1,
