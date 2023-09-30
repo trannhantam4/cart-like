@@ -57,6 +57,7 @@ const AutocompleteTextInput = ({ inputValue, onInputChange }) => {
       <TextInput
         style={styles.input}
         value={inputValue}
+        keyboardType="number-pad"
         onChangeText={handleInputChange}
         placeholder="Enter a number..."
       />

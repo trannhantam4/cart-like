@@ -6,6 +6,10 @@ import {
   Dimensions,
   Alert,
   KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
 } from "react-native";
 import Input from "./Input";
 import { GlobalStyles } from "../../constant/styles";
@@ -92,78 +96,93 @@ export default function ExpenseForm({
   };
 
   return (
-    <KeyboardAvoidingView style={styles.form}>
-      <Text style={styles.title}>Your Expense</Text>
-      <View style={styles.inputRow}>
-        <AutocompleteTextInput
-          inputValue={input.price}
-          onInputChange={handlePriceChange}
-        />
-        <View style={styles.screen}>
-          <Text style={styles.label}>Date: {getDateFormat(selectedDate)}</Text>
-          <Button style={styles.button} onPress={() => setShowDatePicker(true)}>
-            Select Date
-          </Button>
-        </View>
-      </View>
-      <View style={styles.screen}>
-        <Text style={styles.label}>Type:</Text>
-        <Picker
-          style={{
-            width: "50%",
-            color: GlobalStyles.colors.primary500,
-            fontWeight: "bold",
-            backgroundColor: GlobalStyles.colors.primary700,
-          }}
-          selectedValue={input.type}
-          mode="dropdown"
-          onValueChange={inputChangeHandler.bind(this, "type")}
-        >
-          <Picker.Item label="Food" value="Food" />
-          <Picker.Item label="Invest" value="Invest" />
-          <Picker.Item label="Fashion" value="Fashion" />
-          <Picker.Item label="Health" value="Health" />
-          <Picker.Item label="Other" value="Other" />
-        </Picker>
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.form}
+    >
+      <ScrollView>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View>
+            <Text style={styles.title}>Your Expense</Text>
+            <View style={styles.inputRow}>
+              <AutocompleteTextInput
+                inputValue={input.price}
+                onInputChange={handlePriceChange}
+              />
+              <View style={styles.screen}>
+                <Text style={styles.label}>
+                  Date: {getDateFormat(selectedDate)}
+                </Text>
+                <Button
+                  style={styles.button}
+                  onPress={() => setShowDatePicker(true)}
+                >
+                  Select Date
+                </Button>
+              </View>
+            </View>
+            <View style={styles.screen}>
+              <Text style={styles.label}>Type:</Text>
+              <Picker
+                style={{
+                  width: "50%",
+                  color: GlobalStyles.colors.primary500,
+                  fontWeight: "bold",
+                  backgroundColor: GlobalStyles.colors.primary700,
+                }}
+                selectedValue={input.type}
+                mode="dropdown"
+                onValueChange={inputChangeHandler.bind(this, "type")}
+              >
+                <Picker.Item label="Food" value="Food" />
+                <Picker.Item label="Invest" value="Invest" />
+                <Picker.Item label="Fashion" value="Fashion" />
+                <Picker.Item label="Health" value="Health" />
+                <Picker.Item label="Gas" value="Gas" />
+                <Picker.Item label="Other" value="Other" />
+              </Picker>
+            </View>
 
-      {showDatePicker && (
-        <DateTimePicker
-          value={selectedDate}
-          style={{ height: height * 0.2 }}
-          mode="date"
-          display="default"
-          onChange={handleDateChange}
-          maximumDate={new Date()}
-        />
-      )}
+            {showDatePicker && (
+              <DateTimePicker
+                value={selectedDate}
+                style={{ height: height * 0.2 }}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+                maximumDate={new Date()}
+              />
+            )}
 
-      <Input
-        label="Description"
-        textInputConfig={{
-          multiLine: true,
-          autoCorrect: true,
-          autoCapitalize: "sentences",
-          onChangeText: inputChangeHandler.bind(this, "des"),
-          value: input.des,
-          placeholder: "name of thing(s) or anything",
-        }}
-      />
-      <View style={styles.buttonContainer}>
-        <Button style={styles.button} mode="flat" onPress={onCancel}>
-          Cancel
-        </Button>
-        <Button style={styles.button} onPress={submitHandler}>
-          {submitLabel}
-        </Button>
-      </View>
+            <Input
+              label="Description"
+              textInputConfig={{
+                multiLine: true,
+                autoCorrect: true,
+                autoCapitalize: "sentences",
+                onChangeText: inputChangeHandler.bind(this, "des"),
+                value: input.des,
+                placeholder: "name of thing(s) or anything",
+              }}
+            />
+            <View style={styles.buttonContainer}>
+              <Button style={styles.button} mode="flat" onPress={onCancel}>
+                Cancel
+              </Button>
+              <Button style={styles.button} onPress={submitHandler}>
+                {submitLabel}
+              </Button>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   form: {
-    marginTop: height * 0.05,
+    flex: 1,
   },
   inputRow: {
     flexDirection: "row",
@@ -181,7 +200,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: GlobalStyles.colors.primary500,
     textAlign: "center",
-    marginVertical: height * 0.01,
+    marginVertical: height * 0.005,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -189,7 +208,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    width: width * 0.25,
+    flex: 1,
   },
   label: {
     fontSize: 12,

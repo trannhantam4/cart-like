@@ -20,12 +20,15 @@ export default function Button({ children, onPress, mode, style }) {
 }
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 6,
+    borderRadius: 10,
     padding: 8,
     backgroundColor: GlobalStyles.colors.primary500,
+    margin: 10,
   },
   flat: {
     backgroundColor: "transparent",
+    borderColor: GlobalStyles.colors.primary500,
+    borderWidth: 1,
   },
   buttonText: {
     color: "white",
