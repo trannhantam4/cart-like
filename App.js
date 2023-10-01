@@ -136,17 +136,7 @@ export default function App() {
   if (!user) {
     return (
       <LogIn>
-        <TouchableOpacity
-          style={styles.loginIcon}
-          onPress={onGoogleButtonPress}
-        >
-          <Ionicons
-            name="logo-google"
-            size={24}
-            color={GlobalStyles.colors.primary500}
-          />
-          <Text style={styles.loginText}>Google</Text>
-        </TouchableOpacity>
+        <GoogleSigninButton onPress={onGoogleButtonPress} />
       </LogIn>
     );
   }
