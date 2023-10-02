@@ -17,7 +17,7 @@ export default function Input({ label, style, textInputConfig }) {
 }
 const styles = StyleSheet.create({
   screen: {
-    marginHorizontal: 6,
+    marginHorizontal: 8,
     marginVertical: 12,
   },
   label: {

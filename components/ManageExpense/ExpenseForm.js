@@ -109,8 +109,8 @@ export default function ExpenseForm({
                 inputValue={input.price}
                 onInputChange={handlePriceChange}
               />
-              <View style={styles.screen}>
-                <Text style={styles.label}>
+              <View style={styles.screen1}>
+                <Text style={styles.label} adjustsFontSizeToFit>
                   Date: {getDateFormat(selectedDate)}
                 </Text>
                 <Button
@@ -122,7 +122,7 @@ export default function ExpenseForm({
               </View>
             </View>
             <View style={styles.screen}>
-              <Text style={styles.label}>Type:</Text>
+              <Text style={[styles.label, { marginBottom: 12 }]}>Type:</Text>
               <Picker
                 style={{
                   width: "50%",
@@ -187,15 +187,13 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    flex: 1,
+    alignItems: "center",
   },
   row: {
     flex: 1,
   },
-  screen: {
-    marginHorizontal: 6,
-    marginVertical: 12,
-  },
+  screen: { marginHorizontal: 9 },
+  screen1: { marginHorizontal: 7, marginTop: 15 },
   title: {
     fontSize: height * 0.04,
     fontWeight: "bold",
@@ -214,7 +212,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 12,
     color: GlobalStyles.colors.primary500,
-    marginBottom: 12,
     fontWeight: "bold",
   },
 });
