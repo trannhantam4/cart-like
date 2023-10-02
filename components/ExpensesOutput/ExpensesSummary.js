@@ -3,27 +3,12 @@ import { View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constant/styles";
 import { Picker } from "@react-native-picker/picker";
 
-export default function ExpensesSummary({
-  expenses,
-  period,
-  selectDate,
-  fromScreen,
-}) {
+export default function ExpensesSummary({ expenses, selectDate, fromScreen }) {
   const [selectedDate, setSelectedDate] = React.useState("");
   const expensesSum = expenses.reduce((sum, expense) => {
     return sum + expense.price;
   }, 0);
   const formattedSum = expensesSum.toLocaleString(); // Format sum with dots
-
-  const pickerRef = React.useRef();
-
-  function open() {
-    pickerRef.current.focus();
-  }
-
-  function close() {
-    pickerRef.current.blur();
-  }
 
   return (
     <View style={styles.container}>
@@ -55,11 +40,12 @@ const styles = StyleSheet.create({
     height: "10%",
     padding: 8,
     backgroundColor: GlobalStyles.colors.primary50,
-    borderRadius: 6,
+    borderRadius: 16,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     elevation: 8,
+    marginHorizontal: 8,
   },
   period: {
     fontSize: 16,
@@ -70,5 +56,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: GlobalStyles.colors.primary500,
     fontWeight: "bold",
+    paddingRight: 12,
   },
 });

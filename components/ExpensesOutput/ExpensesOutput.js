@@ -19,7 +19,7 @@ export default function ExpensesOutput({
         selectDate={selectDate}
         fromScreen={fromScreen}
       />
-      {/* <Text>{user.displayName}</Text> */}
+
       <ExpensesList expenses={expenses} />
     </View>
   );
@@ -27,7 +27,7 @@ export default function ExpensesOutput({
 const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
-    paddingHorizontal: 24,
+    paddingHorizontal: 12,
     backgroundColor: GlobalStyles.colors.primary700,
     flex: 1,
   },
