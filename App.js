@@ -154,7 +154,7 @@ export default function App() {
             <Stack.Screen
               name="ManageExpense"
               component={ManageExpense}
-              options={{ presentation: "modal" }}
+              options={{ presentation: "modal", headerShown: false }}
             />
             <Stack.Screen
               options={{ headerShown: false, presentation: "modal" }}

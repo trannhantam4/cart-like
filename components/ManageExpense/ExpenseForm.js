@@ -103,7 +103,9 @@ export default function ExpenseForm({
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.title}>Your Expense</Text>
+            <Text style={styles.title}>
+              {!defaultValue ? "Add" : "Update"} Expense
+            </Text>
             <View style={styles.inputRow}>
               <AutocompleteTextInput
                 inputValue={input.price}

@@ -101,7 +101,7 @@ export default function UserManageScreen() {
           label="User"
           textInputConfig={{
             autoCorrect: true,
-            width: "80%",
+            width: "100%",
             value: newDisplayName,
             onChangeText: (text) => setNewDisplayName(text),
           }}
@@ -111,7 +111,12 @@ export default function UserManageScreen() {
         title="Change Profile Picture"
         onPress={checkAndRequestPermissions}
       /> */}
-      <Button onPress={handleChangeDisplayName}>Change name</Button>
+      <Button
+        onPress={handleChangeDisplayName}
+        style={{ width: "50%", alignSelf: "center" }}
+      >
+        Change name
+      </Button>
     </View>
   );
 }
