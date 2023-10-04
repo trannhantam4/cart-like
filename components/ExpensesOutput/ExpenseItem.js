@@ -1,8 +1,14 @@
-import { View, Text, Pressable, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import { TouchableHighlight } from "react-native-gesture-handler";
 import React from "react";
 import { GlobalStyles } from "../../constant/styles";
 import { getDateFormat } from "../../uti/Date";
-
 import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("screen");
 export default function ExpenseItem({ id, des, price, date, type }) {
@@ -15,10 +21,7 @@ export default function ExpenseItem({ id, des, price, date, type }) {
     navigation.navigate("ManageExpense", { expenseId: id });
   }
   return (
-    <Pressable
-      onPress={pressHandler}
-      style={({ pressed }) => pressed && styles.pressed}
-    >
+    <TouchableOpacity onPress={pressHandler} activeOpacity={0.7}>
       <View style={styles.item}>
         <View
           style={{
@@ -35,18 +38,17 @@ export default function ExpenseItem({ id, des, price, date, type }) {
           <Text style={styles.price}> {formattedPrice}</Text>
         </View>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 const styles = StyleSheet.create({
-  pressed: { opacity: 0.8 },
   item: {
-    padding: 12,
+    padding: 16,
     margin: 8,
     backgroundColor: GlobalStyles.colors.primary50,
     flexDirection: "row",
     justifyContent: "space-between",
-    borderRadius: 16,
+    borderRadius: 24,
     elevation: 8,
     shadowColor: GlobalStyles.colors.gray500,
     shadowRadius: 4,
@@ -54,6 +56,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
   },
   textBase: {
+    paddingLeft: 6,
     color: GlobalStyles.colors.primary500,
   },
   des: { fontSize: 16, marginBottom: 4, fontWeight: "bold" },
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: 16,
     width: width * 0.3,
     elevation: 7,
   },

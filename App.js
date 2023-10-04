@@ -106,7 +106,6 @@ export default function App() {
   async function onGoogleButtonPress() {
     // Check if your device supports Google Play
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
     // Get the users ID token
     const { idToken } = await GoogleSignin.signIn();

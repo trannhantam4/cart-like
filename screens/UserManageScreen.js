@@ -4,7 +4,6 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   TextInput,
-  Button,
   Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -13,6 +12,7 @@ import Input from "../components/ManageExpense/Input";
 import { GlobalStyles } from "../constant/styles";
 import ImagePicker from "react-native-image-picker";
 import { storage } from "@react-native-firebase/storage";
+import Button from "../components/UI/Button";
 // import {
 //   checkMultiple,
 //   PERMISSIONS,
@@ -111,7 +111,7 @@ export default function UserManageScreen() {
         title="Change Profile Picture"
         onPress={checkAndRequestPermissions}
       /> */}
-      <Button title="Save Display Name" onPress={handleChangeDisplayName} />
+      <Button onPress={handleChangeDisplayName}>Change name</Button>
     </View>
   );
 }
